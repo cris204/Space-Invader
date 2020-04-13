@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MapLimits
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "MapLimits") {
-            PoolManager.Instance.ReleaseObject("Prefabs/Bullet", this.gameObject);
+            PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, this.gameObject);
         }
     }
 

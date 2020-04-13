@@ -5,5 +5,6 @@ using UnityEngine;
 public class Env 
 {
     //Paths
-    public const string BULLET_PATH = "";
+    public const string BULLET_PATH = "Prefabs/Bullet";
+    public const string BULLET_VFX_PATH = "Prefabs/BulletVfx";
 }

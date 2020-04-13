@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         GameObject bullet;
-        bullet = PoolManager.Instance.GetObject("Prefabs/Bullet");
+        bullet = PoolManager.Instance.GetObject(Env.BULLET_PATH);
         bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
     }
 
