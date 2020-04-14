@@ -6,9 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private float horizontal;
-    private float vertical;
     public float speed;
     public GameObject muzzle;
+
+    [Header("Shoot")]
+    private float shootDelay = 0.5f;
+    private Coroutine  waitToCanShoot;
+    private bool canShoot=true;
+
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -17,7 +22,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         this.Move();
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetButton("Shoot")) {
             this.Shoot();
         }
     }
@@ -32,10 +37,35 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet;
-        bullet = PoolManager.Instance.GetObject(Env.BULLET_PATH);
-        bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
+        if (this.canShoot) {
+            GameObject bullet;
+            bullet = PoolManager.Instance.GetObject(Env.BULLET_PATH);
+            bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
+            if (this.waitToCanShoot == null) {
+                this.waitToCanShoot = StartCoroutine(WaitToCanShoot());
+            }
+        }
     }
+
+    private IEnumerator WaitToCanShoot()
+    {
+        this.canShoot = false;
+        yield return new WaitForSeconds(this.shootDelay);
+        this.canShoot = true;
+        this.waitToCanShoot = null;
+    }
+
+    #region Collision
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy") {
+            Destroy(this.gameObject);
+            EventManager.Instance.TriggerEvent(new EndGameEvent());
+        }
+    }
+
+    #endregion
 
 
 }

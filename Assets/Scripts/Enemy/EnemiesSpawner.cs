@@ -6,20 +6,33 @@ public class EnemiesSpawner : MonoBehaviour
 {
 
     public Vector2 size;
+    private Vector2 spawnPos;
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            SpawnEnemies();
+        EventManager.Instance.AddListener<SpawnEnemiesEvent>(this.OnSpawnEnemies);
+    }
+
+    public void OnSpawnEnemies(SpawnEnemiesEvent e)
+    {
+        for (int i = 0; i < e.enemiesQuantity; i++) {
+            this.SpawnEnemies();
         }
     }
 
     public void SpawnEnemies()
     {
-        Vector2 pos = new Vector3(Random.Range(-size.x / 2, size.x / 2),this.transform.position.y);
-        GameObject enemySpawned = Instantiate(ResourceManager.Instance.GetGameObject(Env.ENEMY_PATH), pos, Quaternion.identity);
-
+        spawnPos = new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(this.transform.position.y -size.y / 2, this.transform.position.y + size.y / 2));
+        GameObject enemySpawned = Instantiate(ResourceManager.Instance.GetGameObject(Env.ENEMY_PATH), spawnPos, Quaternion.identity);
     }
+
+    private void OnDestroy()
+    {
+        if (EventManager.Instance != null) {
+            EventManager.Instance.RemoveListener<SpawnEnemiesEvent>(this.OnSpawnEnemies);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
