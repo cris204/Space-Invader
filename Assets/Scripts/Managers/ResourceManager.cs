@@ -28,6 +28,10 @@ public class ResourceManager : MonoBehaviour
     {
         return Resources.Load<GameObject>(path);
     }
+    public AudioClip GetAudio(string path)
+    {
+        return Resources.Load<AudioClip>(path);
+    }
 
 
 }

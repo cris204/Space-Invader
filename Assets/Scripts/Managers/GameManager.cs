@@ -95,7 +95,9 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.TriggerEvent(new UpdatePointsEvent());
         if (points % 10 == 0) {
             EventManager.Instance.TriggerEvent(new DiffcultLevelUpEvent());
-            this.enemiesToSpawn += 2;
+            if (this.enemiesToSpawn < 20) {
+                this.enemiesToSpawn += 2;
+            }
             if (this.timeToSpawn > 2) {
                 this.timeToSpawn -= 0.5f;
             }

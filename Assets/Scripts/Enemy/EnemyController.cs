@@ -114,6 +114,7 @@ public class EnemyController : MonoBehaviour
         if (collision.tag == "Bullet") {
             EventManager.Instance.TriggerEvent(new EnemyWasDestroyedEvent());
             PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, collision.gameObject);
+            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_TWO_TONE);
             this.DestroyEnemy();
         } else if (collision.tag == "DownLimit") {
             this.transform.position = this.spawnPosition;

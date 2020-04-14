@@ -7,10 +7,19 @@ public class Env
     //Controllers
     public const float SPEED_MULTIPLIER = 1.05f;
 
-    //Paths
+    //Objects Paths
     public const string BULLET_PATH = "Prefabs/Bullet";
     public const string BULLET_VFX_PATH = "Prefabs/BulletVfx";
     public const string ENEMY_PATH = "Prefabs/Enemy";
+    public const string AUDIO_SOURCE = "Prefabs/AudioSourceObject";
 
+    //Audio Paths
+    public static string SOUND_LASER = "Sounds/sfx_laser1";
+    public static string SOUND_LASER_ENEMY = "Sounds/sfx_laser2";
+    public static string SOUND_LOSE = "Sounds/sfx_lose";
+    public static string SOUND_SHIELD_UP = "Sounds/sfx_shieldUp";
+    public static string SOUND_SHIELD_DOWN = "Sounds/sfx_shieldDown";
+    public static string SOUND_TWO_TONE = "Sounds/sfx_twoTone";
+    public static string SOUND_ZAP = "Sounds/sfx_zap";
 
 }

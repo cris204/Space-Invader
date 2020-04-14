@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
             GameObject bullet;
             bullet = PoolManager.Instance.GetObject(Env.BULLET_PATH);
             bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
+            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_LASER,0.06f);
             if (this.waitToCanShoot == null) {
                 this.waitToCanShoot = StartCoroutine(WaitToCanShoot());
             }
@@ -58,7 +59,8 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy") {
-            Destroy(this.gameObject);
+            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_LOSE,0.8f);
+            this.gameObject.SetActive(false);
             EventManager.Instance.TriggerEvent(new EndGameEvent());
         }
     }
