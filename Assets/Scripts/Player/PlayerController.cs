@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour
             this.Shoot();
         }
     }
-
-
     private void Move()
     {
         horizontal = Input.GetAxis("Horizontal") ;

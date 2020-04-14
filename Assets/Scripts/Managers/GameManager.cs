@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+
+    private bool playerIsAlive=true;
     private int points;
 
     [Header("EnemySpawn")]
     private float timeToSpawn = 5f;
-    private float currentTimeToSpawn =0;
+    private float currentTimeToSpawn = 4;
     private int enemiesToSpawn = 5;
     private int currentEnemies;
 
@@ -19,30 +30,46 @@ public class GameManager : MonoBehaviour
         return this.currentEnemies;
     }
 
-    public void SetCurrentEnemies(int value)
+    public int GetPoints()
     {
-        this.currentEnemies = value;
+        return this.points;
+    }
+    public bool GetPlayerIsAlive()
+    {
+        return this.playerIsAlive;
     }
 
     #endregion
-
+    private void Awake()
+    {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
 
     void Start()
     {
         EventManager.Instance.AddListener<EndGameEvent>(this.OnEndGame);
         EventManager.Instance.AddListener<EnemyWasDestroyedEvent>(this.OnEnemyWasDestroyed);
+        this.CheckSpawnEnemy(true);
     }
 
     void Update()
     {
-        this.CheckSpawnEnemy();
+        if (this.playerIsAlive) {
+            this.CheckSpawnEnemy();
+        }
     }
 
     #region EnemySpawn
 
-    private void CheckSpawnEnemy()
+    private void CheckSpawnEnemy(bool forceToSpawn=false)
     {
-        if (this.currentTimeToSpawn > this.timeToSpawn) {
+        if (this.currentTimeToSpawn > this.timeToSpawn || forceToSpawn) {
+            Debug.LogError("Spawn");
             this.currentTimeToSpawn = 0;
             this.currentEnemies += enemiesToSpawn;
             EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
@@ -60,11 +87,23 @@ public class GameManager : MonoBehaviour
     #region Events
     private void OnEndGame(EndGameEvent e)
     {
-        Debug.LogError("Finish");
+        this.playerIsAlive = false;
     }
     private void OnEnemyWasDestroyed(EnemyWasDestroyedEvent e)
     {
         this.points++;
+        EventManager.Instance.TriggerEvent(new UpdatePointsEvent());
+        if (points % 10 == 0) {
+            EventManager.Instance.TriggerEvent(new DiffcultLevelUpEvent());
+            this.enemiesToSpawn += 2;
+            if (this.timeToSpawn > 2) {
+                this.timeToSpawn -= 0.5f;
+            }
+        }
+        this.currentEnemies--;
+        if (this.currentEnemies <= 0) {
+            this.CheckSpawnEnemy(true);
+        }
     }
 
 
