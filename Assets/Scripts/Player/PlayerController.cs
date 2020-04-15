@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private GameObject shieldGO;
 
     [Header("Shoot")]
-    private float shootDelay = 0.5f;
+    private float shootDelay = 0.2f;
     private Coroutine  waitToCanShoot;
     private bool canShoot=true;
 
@@ -29,8 +29,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        this.MoveInput();
-        this.ShootInput();
+        if (!GameManager.Instance.GetIsPaused()) {
+            this.MoveInput();
+            this.ShootInput();
+        }
     }
 
     private void FixedUpdate()
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region PowerUps
     private void AddShield()
     {
         this.hasShield = true;
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour
         this.shieldGO.transform.SetParent(this.transform);
         this.shieldGO.transform.localPosition = Vector2.zero;
     }
-
+    #endregion
 
     #region Events
 
@@ -128,7 +131,7 @@ public class PlayerController : MonoBehaviour
     #endregion
     private void OnDestroy()
     {
-        if (EventManager.Instance != null) {
+        if (EventManager.HasInstance()) {
             EventManager.Instance.RemoveListener<LostShieldEvent>(this.OnLostShieldEvent);
         }
     }

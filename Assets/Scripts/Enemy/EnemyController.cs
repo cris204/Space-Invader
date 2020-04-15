@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour
     {
         EventManager.Instance.AddListener<DiffcultLevelUpEvent>(this.OnLevelUp);
         EventManager.Instance.AddListener<EndGameEvent>(this.OnEndGame);
+        EventManager.Instance.AddListener<ReturnToMenuEvent>(this.OnReturnToMenu);
     }
 
     private void OnEnable()
@@ -68,6 +69,11 @@ public class EnemyController : MonoBehaviour
     private void OnEndGame(EndGameEvent e)
     {
         this.DestroyEnemy();
+    }
+
+    private void OnReturnToMenu(ReturnToMenuEvent e)
+    {
+        PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
     }
 
     #endregion
@@ -117,6 +123,7 @@ public class EnemyController : MonoBehaviour
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_TWO_TONE);
             this.DestroyEnemy();
         } else if (collision.tag == "DownLimit") {
+            GameManager.Instance.DecreaseCurrentEnemies();
             PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
             EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
             {
@@ -136,9 +143,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (EventManager.Instance != null) {
+        if (EventManager.HasInstance()) {
             EventManager.Instance.RemoveListener<DiffcultLevelUpEvent>(this.OnLevelUp);
             EventManager.Instance.RemoveListener<EndGameEvent>(this.OnEndGame);
+            EventManager.Instance.RemoveListener<ReturnToMenuEvent>(this.OnReturnToMenu);
         }
     }
 }

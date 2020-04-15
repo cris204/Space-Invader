@@ -11,6 +11,10 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+    private void Start()
+    {
+        EventManager.Instance.AddListener<ReturnToMenuEvent>(this.OnReturnToMenu);
+    }
 
     public void Shoot(Vector2 startPosition)
     {
@@ -25,5 +29,19 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    #region Events
+    private void OnReturnToMenu(ReturnToMenuEvent e)
+    {
+        PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, this.gameObject);
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        if (EventManager.HasInstance()) {
+            EventManager.Instance.RemoveListener<ReturnToMenuEvent>(this.OnReturnToMenu);
+        }
+    }
 
 }

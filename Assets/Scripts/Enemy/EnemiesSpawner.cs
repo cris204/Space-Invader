@@ -22,13 +22,15 @@ public class EnemiesSpawner : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        spawnPos = new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(this.transform.position.y -size.y / 2, this.transform.position.y + size.y / 2));
-        GameObject enemySpawned = Instantiate(ResourceManager.Instance.GetGameObject(Env.ENEMY_PATH), spawnPos, Quaternion.identity);
+        this.spawnPos = new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(this.transform.position.y -size.y / 2, this.transform.position.y + size.y / 2));
+        GameObject enemySpawned = PoolManager.Instance.GetObject(Env.ENEMY_PATH);
+        enemySpawned.transform.position = this.spawnPos;
+        GameManager.Instance.PlusCurrentEnemies();
     }
 
     private void OnDestroy()
     {
-        if (EventManager.Instance != null) {
+        if (EventManager.HasInstance()) {
             EventManager.Instance.RemoveListener<SpawnEnemiesEvent>(this.OnSpawnEnemies);
         }
     }

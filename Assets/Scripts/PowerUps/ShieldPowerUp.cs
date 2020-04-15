@@ -13,7 +13,7 @@ public class ShieldPowerUp : MonoBehaviour
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
-       
+        EventManager.Instance.AddListener<ReturnToMenuEvent>(this.OnReturnToMenu);
     }
 
     private void OnEnable()
@@ -33,11 +33,23 @@ public class ShieldPowerUp : MonoBehaviour
         speedVector.y = speedY * Time.fixedDeltaTime;
         rb.velocity =  new Vector3 (speedVector.x, speedVector.y, 0);
     }
+    #region Events
+    private void OnReturnToMenu(ReturnToMenuEvent e)
+    {
+        PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
+    }
 
+    #endregion
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DownLimit") {
             PoolManager.Instance.ReleaseObject(Env.SHIELD_POWER,this.gameObject);
+        }
+    }
+    private void OnDestroy()
+    {
+        if (EventManager.HasInstance()) {
+            EventManager.Instance.RemoveListener<ReturnToMenuEvent>(this.OnReturnToMenu);
         }
     }
 

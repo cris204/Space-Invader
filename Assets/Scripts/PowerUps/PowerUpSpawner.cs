@@ -33,7 +33,7 @@ public class PowerUpSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (EventManager.Instance != null) {
+        if (EventManager.HasInstance()) {
             EventManager.Instance.RemoveListener<SpawnPowerUpEvent>(this.OnSpawnPowerUpEvent);
         }
     }

@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject changeShipContainer;
 
 
+    #region ButtonEvents
     public void StartGame()
     {
         SceneLoaderManager.Instance.LoadScene(Env.GAME_SCENE);
@@ -25,6 +26,7 @@ public class MenuManager : MonoBehaviour
         this.principalMenu.SetActive(true);
         this.changeShipContainer.SetActive(false);
     }
+    #endregion
 
     public void Quit()
     {

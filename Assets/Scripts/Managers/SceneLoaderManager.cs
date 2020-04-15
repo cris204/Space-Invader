@@ -8,4 +8,5 @@ public class SceneLoaderManager : Singleton<SceneLoaderManager>
     {
         SceneManager.LoadScene(name);
     }
+
 }

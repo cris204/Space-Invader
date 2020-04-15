@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("General")]
     private bool playerIsAlive=true;
+    private bool isPaused=false;
 
     [Header("EnemySpawn")]
     private float timeToSpawnEnemies = 5f;
@@ -27,12 +28,22 @@ public class GameManager : MonoBehaviour
     private int points;
 
     #region Get&Set
-
+    public bool GetIsPaused()
+    {
+        return this.isPaused;
+    }
     public int GetCurrentEnemies()
     {
         return this.currentEnemies;
     }
-
+    public void PlusCurrentEnemies()
+    {
+        this.currentEnemies++;
+    }
+    public void DecreaseCurrentEnemies()
+    {
+        this.currentEnemies--;
+    }
     public int GetPoints()
     {
         return this.points;
@@ -62,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<EndGameEvent>(this.OnEndGame);
         EventManager.Instance.AddListener<EnemyWasDestroyedEvent>(this.OnEnemyWasDestroyed);
+        EventManager.Instance.AddListener<TogglePauseEvent>(this.OnTogglePause);
         this.CheckSpawnEnemy(true);
         this.highScore = StorageManager.Instance.GetInt(Env.HIGHSCORE_KEY, 0);
     }
@@ -71,7 +83,20 @@ public class GameManager : MonoBehaviour
         if (this.playerIsAlive) {
             this.CheckSpawnEnemy();
         }
+        this.InputPause();
     }
+
+    public void InputPause()
+    {
+        if (Input.GetButtonDown("Pause")) {
+            EventManager.Instance.TriggerEvent(new TogglePauseEvent
+            {
+                setPause=!this.isPaused
+            });
+        }
+    }
+
+
 
     #region EnemySpawn
 
@@ -79,11 +104,16 @@ public class GameManager : MonoBehaviour
     {
         if (this.currentTimeToSpawnEnemies > this.timeToSpawnEnemies || forceToSpawn) {
             this.currentTimeToSpawnEnemies = 0;
-            this.currentEnemies += enemiesToSpawn;
-            EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
-            {
-                enemiesQuantity = enemiesToSpawn
-            });
+          //  this.currentEnemies += enemiesToSpawn;
+            if (this.currentEnemies < 80) {
+                if(this.currentEnemies + enemiesToSpawn > 80) {
+                    this.enemiesToSpawn = 80 - this.currentEnemies;
+                }
+                EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
+                {
+                    enemiesQuantity = this.enemiesToSpawn
+                });
+            }
         }
         this.currentTimeToSpawnEnemies += Time.deltaTime;
     }
@@ -122,7 +152,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    private void OnTogglePause(TogglePauseEvent e)
+    {
+        this.isPaused = e.setPause;
+        if (this.isPaused) {
+            Time.timeScale = 0;
+        } else {
+            Time.timeScale = 1;
+        }
+    }
     #endregion
 
     private void CheckHighScore()
@@ -136,9 +174,10 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (EventManager.Instance != null) {
+        if (EventManager.HasInstance()) {
             EventManager.Instance.RemoveListener<EndGameEvent>(this.OnEndGame);
             EventManager.Instance.RemoveListener<EnemyWasDestroyedEvent>(this.OnEnemyWasDestroyed);
+            EventManager.Instance.RemoveListener<TogglePauseEvent>(this.OnTogglePause);
         }
     }
 }
