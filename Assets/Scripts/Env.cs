@@ -18,6 +18,7 @@ public class Env
     public const string AUDIO_SOURCE = "Prefabs/AudioSourceObject";
 
     //PowerUps Paths
+    public static int POWER_UPS_COUNT = 1;
     public const string SHIELD_POWER = "Prefabs/PowerUps/ShieldPowerUp";
     public const string SHIELD = "Prefabs/PowerUps/Shield";
 

@@ -40,9 +40,9 @@ public class PoolManager : Singleton<PoolManager>
 
     private GameObject AllocateObject(string path)
     {
-        GameObject obstacle = objectsPool[path][0];
+        GameObject objectPool = objectsPool[path][0];
         objectsPool[path].RemoveAt(0);
-        obstacle.gameObject.SetActive(true);
-        return obstacle;
+        objectPool.gameObject.SetActive(true);
+        return objectPool;
     }
 }

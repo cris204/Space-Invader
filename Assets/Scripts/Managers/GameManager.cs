@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     private bool playerIsAlive=true;
 
     [Header("EnemySpawn")]
-    private float timeToSpawn = 5f;
-    private float currentTimeToSpawn = 4;
+    private float timeToSpawnEnemies = 5f;
+    private float currentTimeToSpawnEnemies = 4;
     private int enemiesToSpawn = 5;
     private int currentEnemies;
 
@@ -77,20 +77,19 @@ public class GameManager : MonoBehaviour
 
     private void CheckSpawnEnemy(bool forceToSpawn=false)
     {
-        if (this.currentTimeToSpawn > this.timeToSpawn || forceToSpawn) {
-            this.currentTimeToSpawn = 0;
+        if (this.currentTimeToSpawnEnemies > this.timeToSpawnEnemies || forceToSpawn) {
+            this.currentTimeToSpawnEnemies = 0;
             this.currentEnemies += enemiesToSpawn;
             EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
             {
                 enemiesQuantity = enemiesToSpawn
             });
         }
-        this.currentTimeToSpawn += Time.deltaTime;
+        this.currentTimeToSpawnEnemies += Time.deltaTime;
     }
 
 
     #endregion
-
 
     #region Events
     private void OnEndGame(EndGameEvent e)
@@ -102,13 +101,19 @@ public class GameManager : MonoBehaviour
         this.points++;
         this.CheckHighScore();
         EventManager.Instance.TriggerEvent(new UpdatePointsEvent());
+
         if (points % 10 == 0) {
+
+            if (this.playerIsAlive) {
+                EventManager.Instance.TriggerEvent(new SpawnPowerUpEvent());
+            }
+
             EventManager.Instance.TriggerEvent(new DiffcultLevelUpEvent());
             if (this.enemiesToSpawn < 20) {
                 this.enemiesToSpawn += 2;
             }
-            if (this.timeToSpawn > 2) {
-                this.timeToSpawn -= 0.5f;
+            if (this.timeToSpawnEnemies > 2) {
+                this.timeToSpawnEnemies -= 0.5f;
             }
         }
         this.currentEnemies--;

@@ -23,8 +23,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EventManager : Singleton<EventManager> // Took from https://gist.github.com/bendangelo/093edb33c2e844c5c73a
+public class EventManager : MonoBehaviour // Took from https://gist.github.com/bendangelo/093edb33c2e844c5c73a
 {
+    private static EventManager instance;
+    public static EventManager Instance {
+        get
+        {
+            return instance;
+        }
+    }
 
     public delegate void EventDelegate<T>(T e) where T : GameEvent;
     private delegate void EventDelegate(GameEvent e);
@@ -51,6 +58,18 @@ public class EventManager : Singleton<EventManager> // Took from https://gist.gi
         }
 
         return internalDelegate;
+    }
+
+
+    private void Awake()
+    {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void AddListener<T>(EventDelegate<T> del) where T : GameEvent

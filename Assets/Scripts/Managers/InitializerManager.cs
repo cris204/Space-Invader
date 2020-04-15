@@ -9,7 +9,7 @@ public class InitializerManager : MonoBehaviour
     {
         PoolManager.Init();
         ResourceManager.Init();
-        EventManager.Init();
+        //EventManager.Init();
         StorageManager.Init();
     }
 

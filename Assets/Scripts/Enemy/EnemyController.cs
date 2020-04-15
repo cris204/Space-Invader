@@ -117,7 +117,11 @@ public class EnemyController : MonoBehaviour
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_TWO_TONE);
             this.DestroyEnemy();
         } else if (collision.tag == "DownLimit") {
-            this.transform.position = this.spawnPosition;
+            PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
+            EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
+            {
+                enemiesQuantity = 1
+            });
         }
     }
     #endregion

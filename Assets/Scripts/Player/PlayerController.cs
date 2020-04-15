@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnLostShieldEvent(LostShieldEvent e)
     {
+        PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_SHIELD_DOWN,0.2f);
         this.hasShield = false;
         this.shieldGO = null;
     }

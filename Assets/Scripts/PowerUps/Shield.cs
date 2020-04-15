@@ -17,7 +17,6 @@ public class Shield : MonoBehaviour
     {
         if (collision.tag == "Enemy") {
             EventManager.Instance.TriggerEvent(new LostShieldEvent());
-            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_SHIELD_DOWN);
             PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, collision.gameObject);
             PoolManager.Instance.ReleaseObject(Env.SHIELD, this.gameObject);
         }
