@@ -2,28 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : Singleton<PoolManager>
 {
-    private static PoolManager instance;
-    public static PoolManager Instance {
-        get
-        {
-            return instance;
-        }
-    }
-    
-    private Dictionary<string,List<GameObject>> objectsPool = new Dictionary<string,List<GameObject>>(); 
 
-    public void Awake()
-    {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this.gameObject);
-    }
+    private Dictionary<string,List<GameObject>> objectsPool = new Dictionary<string,List<GameObject>>(); 
 
     public GameObject GetObject(string path)
     {

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Bullet
   - DownLimit
+  - ShieldPowerUp
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - UpLimit
   - DownLimit
   - Bullet
-  - 
+  - Shield
   - 
   - 
   - 

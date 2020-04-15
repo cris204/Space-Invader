@@ -8,12 +8,13 @@ public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI pointsTxt;
 
+    [Header("ChangeShip"), SerializeField]
+    private GameObject changeShipContainer;
     [Header("EndGame"), SerializeField]
     private GameObject endGameContainer;
     [SerializeField] private TextMeshProUGUI pointsEndGameTxt;
     [SerializeField] private TextMeshProUGUI highScorePointsEndGameTxt;
     [SerializeField] private Image spaceShip;
-
 
     void Start()
     {
@@ -21,12 +22,24 @@ public class CanvasManager : MonoBehaviour
         EventManager.Instance.AddListener<UpdatePointsEvent>(this.OnEnemyWasDestroyed);
     }
 
+    public void PlayAgain()
+    {
+        SceneLoaderManager.Instance.LoadScene(Env.GAME_SCENE);
+    }
+
+    public void ChangeShip()
+    {
+        this.endGameContainer.SetActive(false);
+        this.changeShipContainer.SetActive(true);
+    }
+
+
     #region Events
     private void OnEndGame(EndGameEvent e)
     {
         this.endGameContainer.SetActive(true);
         this.pointsEndGameTxt.text = string.Format("Points {0}", GameManager.Instance.GetPoints());
-        this.highScorePointsEndGameTxt.text = string.Format("HighScore {0}", GameManager.Instance.GetPoints());
+        this.highScorePointsEndGameTxt.text = string.Format("HighScore {0}", GameManager.Instance.GetHighScore());
 
     }
     private void OnEnemyWasDestroyed(UpdatePointsEvent e)

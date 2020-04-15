@@ -23,27 +23,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EventManager : MonoBehaviour // Took from https://gist.github.com/bendangelo/093edb33c2e844c5c73a
+public class EventManager : Singleton<EventManager> // Took from https://gist.github.com/bendangelo/093edb33c2e844c5c73a
 {
-    private static EventManager instance = null;
 
     public delegate void EventDelegate<T>(T e) where T : GameEvent;
     private delegate void EventDelegate(GameEvent e);
 
     private Dictionary<System.Type, EventDelegate> delegates = new Dictionary<System.Type, EventDelegate>();
     private Dictionary<System.Delegate, EventDelegate> delegateLookup = new Dictionary<System.Delegate, EventDelegate>();
-
-    // override so we don't have the typecast the object
-    public static EventManager Instance
-    {
-        get
-        {
-            if (instance == null) {
-                instance = GameObject.FindObjectOfType(typeof(EventManager)) as EventManager;
-            }
-            return instance;
-        }
-    }
 
     private EventDelegate AddDelegate<T>(EventDelegate<T> del) where T : GameEvent
     {
@@ -112,6 +99,5 @@ public class EventManager : MonoBehaviour // Took from https://gist.github.com/b
     public void OnApplicationQuit()
     {
         RemoveAll();
-        instance = null;
     }
 }

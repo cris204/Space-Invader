@@ -13,15 +13,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    [Header("General")]
     private bool playerIsAlive=true;
-    private int points;
 
     [Header("EnemySpawn")]
     private float timeToSpawn = 5f;
     private float currentTimeToSpawn = 4;
     private int enemiesToSpawn = 5;
     private int currentEnemies;
+
+    [Header("Score")]
+    private int highScore;
+    private int points;
 
     #region Get&Set
 
@@ -34,6 +37,11 @@ public class GameManager : MonoBehaviour
     {
         return this.points;
     }
+    public int GetHighScore()
+    {
+        return this.highScore;
+    }
+
     public bool GetPlayerIsAlive()
     {
         return this.playerIsAlive;
@@ -55,6 +63,7 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.AddListener<EndGameEvent>(this.OnEndGame);
         EventManager.Instance.AddListener<EnemyWasDestroyedEvent>(this.OnEnemyWasDestroyed);
         this.CheckSpawnEnemy(true);
+        this.highScore = StorageManager.Instance.GetInt(Env.HIGHSCORE_KEY, 0);
     }
 
     void Update()
@@ -69,7 +78,6 @@ public class GameManager : MonoBehaviour
     private void CheckSpawnEnemy(bool forceToSpawn=false)
     {
         if (this.currentTimeToSpawn > this.timeToSpawn || forceToSpawn) {
-            Debug.LogError("Spawn");
             this.currentTimeToSpawn = 0;
             this.currentEnemies += enemiesToSpawn;
             EventManager.Instance.TriggerEvent(new SpawnEnemiesEvent
@@ -92,6 +100,7 @@ public class GameManager : MonoBehaviour
     private void OnEnemyWasDestroyed(EnemyWasDestroyedEvent e)
     {
         this.points++;
+        this.CheckHighScore();
         EventManager.Instance.TriggerEvent(new UpdatePointsEvent());
         if (points % 10 == 0) {
             EventManager.Instance.TriggerEvent(new DiffcultLevelUpEvent());
@@ -110,6 +119,15 @@ public class GameManager : MonoBehaviour
 
 
     #endregion
+
+    private void CheckHighScore()
+    {
+        if (this.highScore < this.points) {
+            this.highScore = this.points;
+            StorageManager.Instance.SetInt(Env.HIGHSCORE_KEY, highScore);
+        }
+
+    }
 
     private void OnDestroy()
     {

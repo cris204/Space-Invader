@@ -2,27 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : Singleton<ResourceManager>
 {
-    private static ResourceManager instance;
-    public static ResourceManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-    public void Awake()
-    {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this.gameObject);
-    }
+    private Sprite[] spritesInSpriteSheet;
 
+    private void Awake()
+    {
+        spritesInSpriteSheet = Resources.LoadAll<Sprite>("SpriteSheet/sheet");
+    }
 
     public GameObject GetGameObject(string path)
     {
@@ -32,6 +19,14 @@ public class ResourceManager : MonoBehaviour
     {
         return Resources.Load<AudioClip>(path);
     }
-
+    public Sprite GetSprite(string path)
+    {
+        for (int i = 0; i < spritesInSpriteSheet.Length; i++) {
+            if (path == spritesInSpriteSheet[i].name) {
+                return spritesInSpriteSheet[i];
+            }
+        }
+        return null;
+    }
 
 }
