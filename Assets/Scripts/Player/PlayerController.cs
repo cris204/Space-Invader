@@ -6,9 +6,9 @@ using UnityEngine;
 public enum Ship
 {
     blue,
-    red,
     green,
-    orange
+    orange,
+    red,
 }
 
 public class PlayerController : MonoBehaviour

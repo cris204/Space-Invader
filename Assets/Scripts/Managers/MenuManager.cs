@@ -8,7 +8,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject principalMenu;
     [SerializeField] private GameObject changeShipContainer;
 
-
     #region ButtonEvents
     public void StartGame()
     {
