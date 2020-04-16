@@ -20,6 +20,15 @@ public class Env
     public const string BULLET_BLUE_PATH = "Prefabs/Bullets/BulletBlue";
     public const string BULLET_BLUE_VFX_PATH = "Prefabs/Bullets/BulletBlueVfx";
 
+    public const string BULLET_GREEN_PATH = "Prefabs/Bullets/BulletGreen";
+    public const string BULLET_GREEN_VFX_PATH = "Prefabs/Bullets/BulletGreenVfx";
+
+    public const string BULLET_ORANGE_PATH = "Prefabs/Bullets/BulletOrange";
+    public const string BULLET_ORANGE_VFX_PATH = "Prefabs/Bullets/BulletOrangeVfx";
+
+    public const string BULLET_RED_PATH = "Prefabs/Bullets/BulletRed";
+    public const string BULLET_RED_VFX_PATH = "Prefabs/Bullets/BulletRedVfx";
+
 
     //PowerUps Paths
     public static int POWER_UPS_COUNT = 1;

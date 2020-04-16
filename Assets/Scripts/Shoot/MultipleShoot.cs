@@ -12,7 +12,7 @@ public class MultipleShoot : ShootController
         if (this.canShoot) {
             for (int i = 0; i < muzzles.Length; i++) {
                 GameObject bullet;
-                bullet = PoolManager.Instance.GetObject(Env.BULLET_BLUE_PATH);
+                bullet = PoolManager.Instance.GetObject(this.bulletPath);
                 bullet.GetComponent<Bullet>().Shoot(muzzles[i].transform.position);
                 PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_LASER, 0.06f);
             }

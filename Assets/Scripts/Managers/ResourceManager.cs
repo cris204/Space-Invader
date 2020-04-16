@@ -52,7 +52,23 @@ public class ResourceManager : Singleton<ResourceManager>
     public GameObject GetShip(Ship currentShip)
     {
         return PoolManager.Instance.GetObject(string.Format("Prefabs/Player/{0}Ship", currentShip.ToString()));
-
     }
+
+    public string GetBulletPath(Ship currentShip)
+    {
+        switch (currentShip) {
+            case Ship.blue:
+                return Env.BULLET_BLUE_PATH;
+            case Ship.red:
+                return Env.BULLET_RED_PATH;
+            case Ship.green:
+                return Env.BULLET_GREEN_PATH;
+            case Ship.orange:
+                return Env.BULLET_ORANGE_PATH;
+            default:
+                return Env.BULLET_GREEN_PATH;
+        }
+    }
+
 
 }

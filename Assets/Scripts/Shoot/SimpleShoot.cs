@@ -11,7 +11,7 @@ public class SimpleShoot : ShootController
 
         if (this.canShoot) {
             GameObject bullet;
-            bullet = PoolManager.Instance.GetObject(Env.BULLET_BLUE_PATH);
+            bullet = PoolManager.Instance.GetObject(this.bulletPath);
             bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_LASER, 0.06f);
             if (this.waitToCanShoot == null) {
