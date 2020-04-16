@@ -9,13 +9,17 @@ public class Env
     public const string CURRENT_SHIP_KEY = "CurrentShip";
 
     //Controllers
+    public const Ship CURRENT_SHIP = Ship.green;
     public const float SPEED_MULTIPLIER = 1.05f;
 
     //Objects Paths
-    public const string BULLET_PATH = "Prefabs/Bullet";
-    public const string BULLET_VFX_PATH = "Prefabs/BulletVfx";
     public const string ENEMY_PATH = "Prefabs/Enemy";
     public const string AUDIO_SOURCE = "Prefabs/AudioSourceObject";
+
+    //Bullets
+    public const string BULLET_BLUE_PATH = "Prefabs/Bullets/BulletBlue";
+    public const string BULLET_BLUE_VFX_PATH = "Prefabs/Bullets/BulletBlueVfx";
+
 
     //PowerUps Paths
     public static int POWER_UPS_COUNT = 1;
@@ -36,5 +40,24 @@ public class Env
     //Scene Names
     public const string GAME_SCENE = "Game";
     public const string MENU_SCENE = "Menu";
+
+
+    public static Ship ReturnShipEnum(string currentShip)
+    {
+        switch (currentShip) {
+            case "Blue":
+                return Ship.blue;
+            case "Green":
+                return Ship.green;
+            case "Orange":
+                return Ship.orange;
+            case "Red":
+                return Ship.red;
+            default:
+                return Ship.green;
+        }
+    }
+
+
 
 }

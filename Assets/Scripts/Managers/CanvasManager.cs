@@ -68,7 +68,7 @@ public class CanvasManager : MonoBehaviour
         this.endGameContainer.SetActive(true);
         this.pointsEndGameTxt.text = string.Format("Points {0}", GameManager.Instance.GetPoints());
         this.highScorePointsEndGameTxt.text = string.Format("HighScore {0}", GameManager.Instance.GetHighScore());
-        this.spaceShip.sprite= ResourceManager.Instance.GetSprite(StorageManager.Instance.GetString(Env.CURRENT_SHIP_KEY, "playerShip1_blue.png"));
+        this.spaceShip.sprite= ResourceManager.Instance.GetShipSprite((Ship)StorageManager.Instance.GetInt(Env.CURRENT_SHIP_KEY, (int)Ship.green));
 
     }
     private void OnEnemyWasDestroyed(UpdatePointsEvent e)

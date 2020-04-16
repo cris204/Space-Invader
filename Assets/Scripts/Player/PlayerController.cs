@@ -2,28 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum Ship
+{
+    blue,
+    red,
+    green,
+    orange
+}
+
 public class PlayerController : MonoBehaviour
 {
+    public Ship currentShip;
     private Rigidbody2D rb;
     private float horizontal;
     public float speed;
-    public GameObject muzzle;
-    private SpriteRenderer sprRenderer;
+    private ShootController shootController;
 
     [Header("PowerUps")]
     private bool hasShield;
     private GameObject shieldGO;
 
-    [Header("Shoot")]
-    private float shootDelay = 0.2f;
-    private Coroutine  waitToCanShoot;
-    private bool canShoot=true;
+
 
     void Start()
     {
-        this.sprRenderer = GetComponent<SpriteRenderer>();
         this.rb = this.GetComponent<Rigidbody2D>();
-        this.sprRenderer.sprite = ResourceManager.Instance.GetSprite(StorageManager.Instance.GetString(Env.CURRENT_SHIP_KEY, "playerShip1_blue.png"));
+        this.shootController = this.GetComponent<ShootController>();
         EventManager.Instance.AddListener<LostShieldEvent>(this.OnLostShieldEvent);
     }
 
@@ -65,23 +70,9 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (this.canShoot) {
-            GameObject bullet;
-            bullet = PoolManager.Instance.GetObject(Env.BULLET_PATH);
-            bullet.GetComponent<Bullet>().Shoot(muzzle.transform.position);
-            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_LASER,0.06f);
-            if (this.waitToCanShoot == null) {
-                this.waitToCanShoot = StartCoroutine(WaitToCanShoot());
-            }
-        }
+        this.shootController.Shoot();
     }
-    private IEnumerator WaitToCanShoot()
-    {
-        this.canShoot = false;
-        yield return new WaitForSeconds(this.shootDelay);
-        this.canShoot = true;
-        this.waitToCanShoot = null;
-    }
+
     #endregion
 
     #region PowerUps

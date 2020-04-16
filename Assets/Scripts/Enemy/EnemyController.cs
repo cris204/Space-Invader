@@ -68,7 +68,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnEndGame(EndGameEvent e)
     {
-        this.DestroyEnemy();
+        if (this.gameObject.activeInHierarchy) {
+            this.DestroyEnemy();
+        }
     }
 
     private void OnReturnToMenu(ReturnToMenuEvent e)
@@ -119,7 +121,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.tag == "Bullet") {
             EventManager.Instance.TriggerEvent(new EnemyWasDestroyedEvent());
-            PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, collision.gameObject);
+            PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, collision.gameObject);
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_TWO_TONE);
             this.DestroyEnemy();
         } else if (collision.tag == "DownLimit") {
@@ -135,7 +137,7 @@ public class EnemyController : MonoBehaviour
 
     private void DestroyEnemy()
     {
-        GameObject bulletVfx = PoolManager.Instance.GetObject(Env.BULLET_VFX_PATH);
+        GameObject bulletVfx = PoolManager.Instance.GetObject(Env.BULLET_BLUE_VFX_PATH);
         bulletVfx.transform.localPosition = this.transform.localPosition;
         PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
     }

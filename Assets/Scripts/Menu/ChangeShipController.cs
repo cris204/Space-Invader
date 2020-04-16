@@ -9,15 +9,16 @@ public class ChangeShipController : MonoBehaviour
 
     private void OnEnable()
     {
-        this.shipImage.sprite = ResourceManager.Instance.GetSprite(StorageManager.Instance.GetString(Env.CURRENT_SHIP_KEY, "playerShip1_blue.png"));
+        this.shipImage.sprite = ResourceManager.Instance.GetShipSprite((Ship)StorageManager.Instance.GetInt(Env.CURRENT_SHIP_KEY, (int)Ship.green));
     }
 
     #region ButtonEvents
-    public void ChangeShip(string path)
+    public void ChangeShip(string currentShip)
     {
-        this.shipImage.sprite = ResourceManager.Instance.GetSprite(path);
-        StorageManager.Instance.SetString(Env.CURRENT_SHIP_KEY, path);
+        this.shipImage.sprite = ResourceManager.Instance.GetShipSprite(Env.ReturnShipEnum(currentShip));
+        StorageManager.Instance.SetInt(Env.CURRENT_SHIP_KEY, (int)Env.ReturnShipEnum(currentShip));
     }
+
     #endregion
 
 }

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("General")]
+    public Transform playerSpawnPosition;
     private bool playerIsAlive=true;
     private bool isPaused=false;
 
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        this.SpawnPlayer();
         EventManager.Instance.AddListener<EndGameEvent>(this.OnEndGame);
         EventManager.Instance.AddListener<EnemyWasDestroyedEvent>(this.OnEnemyWasDestroyed);
         EventManager.Instance.AddListener<TogglePauseEvent>(this.OnTogglePause);
@@ -96,7 +98,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    private void SpawnPlayer()
+    {
+        GameObject player;
+        player = ResourceManager.Instance.GetShip((Ship)StorageManager.Instance.GetInt(Env.CURRENT_SHIP_KEY, (int)Ship.green));
+        player.transform.position = this.playerSpawnPosition.position;
+    }
 
     #region EnemySpawn
 

@@ -25,14 +25,14 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "MapLimits") {
-            PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, this.gameObject);
+            PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, this.gameObject);
         }
     }
 
     #region Events
     private void OnReturnToMenu(ReturnToMenuEvent e)
     {
-        PoolManager.Instance.ReleaseObject(Env.BULLET_PATH, this.gameObject);
+        PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, this.gameObject);
     }
 
     #endregion
