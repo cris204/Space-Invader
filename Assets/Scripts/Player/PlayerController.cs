@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.currentShip == Ship.red) {
+        if (this.currentShip == Ship.red && !this.hasShield) {
             this.AddShield();
         }
     }
@@ -109,9 +109,9 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "ShieldPowerUp") {
-            PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_SHIELD_UP);
             PoolManager.Instance.ReleaseObject(Env.SHIELD_POWER, collision.gameObject);
-            if (this.hasShield) {
+            if (!this.hasShield) {
+                PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_SHIELD_UP);
                 this.AddShield();
             }
         }
