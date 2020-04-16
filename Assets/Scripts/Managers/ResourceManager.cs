@@ -69,6 +69,19 @@ public class ResourceManager : Singleton<ResourceManager>
                 return Env.BULLET_GREEN_PATH;
         }
     }
-
-
+    public string GetBulletVFXPath(Ship currentShip)
+    {
+        switch (currentShip) {
+            case Ship.blue:
+                return Env.BULLET_BLUE_VFX_PATH;
+            case Ship.red:
+                return Env.BULLET_RED_VFX_PATH;
+            case Ship.green:
+                return Env.BULLET_GREEN_VFX_PATH;
+            case Ship.orange:
+                return Env.BULLET_ORANGE_PATH;
+            default:
+                return Env.BULLET_GREEN_VFX_PATH;
+        }
+    }
 }

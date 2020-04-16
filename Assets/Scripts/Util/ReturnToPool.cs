@@ -6,6 +6,6 @@ public class ReturnToPool : MonoBehaviour
 {
     public void ReturnObjectToPool()
     {
-        PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_VFX_PATH, this.gameObject);
+        PoolManager.Instance.ReleaseObject(ResourceManager.Instance.GetBulletVFXPath(GameManager.Instance.GetPlayerShip()), this.gameObject);
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 267813447291848380}
   - component: {fileID: 5728784720288456889}
   m_Layer: 0
-  m_Name: BulletVfx
+  m_Name: BulletBlueVfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: -6498647964698370199, guid: 3a0f21d5c36c8d045b41da277495e4ea,
+  m_Sprite: {fileID: 3602526423769409086, guid: 3a0f21d5c36c8d045b41da277495e4ea,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

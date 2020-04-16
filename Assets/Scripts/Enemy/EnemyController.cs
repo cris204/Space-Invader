@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private string destroyVfxPath;
 
     [Header("Move")]
     private Vector2 spawnPosition;
@@ -41,6 +42,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
+        this.destroyVfxPath = ResourceManager.Instance.GetBulletVFXPath(GameManager.Instance.GetPlayerShip());
         this.spawnPosition = this.transform.position;
     }
 
@@ -137,7 +139,7 @@ public class EnemyController : MonoBehaviour
 
     private void DestroyEnemy()
     {
-        GameObject bulletVfx = PoolManager.Instance.GetObject(Env.BULLET_BLUE_VFX_PATH);
+        GameObject bulletVfx = PoolManager.Instance.GetObject(this.destroyVfxPath);
         bulletVfx.transform.localPosition = this.transform.localPosition;
         PoolManager.Instance.ReleaseObject(Env.ENEMY_PATH, this.gameObject);
     }
