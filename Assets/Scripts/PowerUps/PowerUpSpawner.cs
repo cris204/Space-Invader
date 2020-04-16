@@ -27,7 +27,8 @@ public class PowerUpSpawner : MonoBehaviour
 
         if (!string.IsNullOrEmpty(powerUpToSpawn)){
             spawnPos = new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(this.transform.position.y - size.y / 2, this.transform.position.y + size.y / 2));
-            Instantiate(ResourceManager.Instance.GetGameObject(powerUpToSpawn), spawnPos, Quaternion.identity);
+            GameObject powerUpSpawned = PoolManager.Instance.GetObject(powerUpToSpawn);
+            powerUpSpawned.transform.position = this.spawnPos;
         }
     }
 

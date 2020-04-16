@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     private Rigidbody2D rb;
     private float bulletSpeed = 10;
+    public Ship currentShip;
+    private string bulletPath;
 
     void Awake()
     {
@@ -14,6 +16,11 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         EventManager.Instance.AddListener<ReturnToMenuEvent>(this.OnReturnToMenu);
+    }
+
+    private void OnEnable()
+    {
+        this.bulletPath = ResourceManager.Instance.GetBulletPath(this.currentShip);
     }
 
     public void Shoot(Vector2 startPosition)
@@ -25,14 +32,14 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "MapLimits") {
-            PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, this.gameObject);
+            PoolManager.Instance.ReleaseObject(this.bulletPath, this.gameObject);
         }
     }
 
     #region Events
     private void OnReturnToMenu(ReturnToMenuEvent e)
     {
-        PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, this.gameObject);
+        PoolManager.Instance.ReleaseObject(this.bulletPath, this.gameObject);
     }
 
     #endregion

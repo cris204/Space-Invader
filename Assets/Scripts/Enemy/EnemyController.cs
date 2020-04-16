@@ -123,7 +123,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.tag == "Bullet") {
             EventManager.Instance.TriggerEvent(new EnemyWasDestroyedEvent());
-            PoolManager.Instance.ReleaseObject(Env.BULLET_BLUE_PATH, collision.gameObject);
+            PoolManager.Instance.ReleaseObject(ResourceManager.Instance.GetBulletPath(GameManager.Instance.GetPlayerShip()), collision.gameObject);
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_TWO_TONE);
             this.DestroyEnemy();
         } else if (collision.tag == "DownLimit") {
