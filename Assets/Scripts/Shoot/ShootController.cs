@@ -8,7 +8,7 @@ public class ShootController : MonoBehaviour
     protected string bulletPath;
 
     [Header("Shoot")]
-    protected float shootDelay = 0.2f;
+    public float shootDelay = 0.2f;
     protected Coroutine waitToCanShoot;
     protected bool canShoot = true;
 

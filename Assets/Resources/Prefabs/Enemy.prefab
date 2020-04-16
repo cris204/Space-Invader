@@ -237,10 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae94359a5711f94c897067bd0335846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedX: 100
-  speedY: -100
   rightRayStartPos: {fileID: 5381498878199150806}
   leftRayStartPos: {fileID: 6320682931335720459}
   layerMask:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 16897

@@ -79,7 +79,7 @@ public class ResourceManager : Singleton<ResourceManager>
             case Ship.green:
                 return Env.BULLET_GREEN_VFX_PATH;
             case Ship.orange:
-                return Env.BULLET_ORANGE_PATH;
+                return Env.BULLET_ORANGE_VFX_PATH;
             default:
                 return Env.BULLET_GREEN_VFX_PATH;
         }

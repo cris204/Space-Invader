@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39a588d2a1d7a940a59839e4cf0266b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShip: 2
+  currentShip: 1
   speed: 10
 --- !u!114 &7456347661354867935
 MonoBehaviour:
@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2047ccc5770fc164793b08cc7d68a9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootDelay: 0.2
   muzzle: {fileID: 7560401518986455695}
 --- !u!1 &7560401518986455695
 GameObject:

@@ -32,6 +32,13 @@ public class PlayerController : MonoBehaviour
         EventManager.Instance.AddListener<LostShieldEvent>(this.OnLostShieldEvent);
     }
 
+    private void OnEnable()
+    {
+        if (this.currentShip == Ship.red) {
+            this.AddShield();
+        }
+    }
+
     void Update()
     {
         if (!GameManager.Instance.GetIsPaused()) {
@@ -104,7 +111,9 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "ShieldPowerUp") {
             PoolManager.Instance.GetObject(Env.AUDIO_SOURCE).GetComponent<PlaySound>().PlayAudio(Env.SOUND_SHIELD_UP);
             PoolManager.Instance.ReleaseObject(Env.SHIELD_POWER, collision.gameObject);
-            this.AddShield();
+            if (this.hasShield) {
+                this.AddShield();
+            }
         }
     }
 

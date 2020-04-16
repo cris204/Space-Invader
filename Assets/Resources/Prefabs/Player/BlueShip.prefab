@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a7144ad6354ab45ae99d293e5b7cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootDelay: 0.35
   muzzles:
   - {fileID: 493701276}
   - {fileID: 4736314956320751850}

@@ -10,11 +10,9 @@ public class EnemyController : MonoBehaviour
     [Header("Move")]
     private Vector2 spawnPosition;
     private float speedMultiply = 1;
-    [SerializeField]
-    private float speedX;
+    private float speedX = 100;
     private float speedXDirection;
-    [SerializeField]
-    private float speedY;
+    private float speedY = -100;
     private float distance = 0.3f;
     private Vector2 speedDirection;
 
@@ -70,6 +68,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnEndGame(EndGameEvent e)
     {
+        this.speedX = 100;
+        this.speedY = -100;
+        this.speedMultiply = 1;
         if (this.gameObject.activeInHierarchy) {
             this.DestroyEnemy();
         }
