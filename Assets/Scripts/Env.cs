@@ -55,7 +55,7 @@ public class Env
     public const string SHIP_BLUE_DESCRIPTION = "<size=50>Blue Ship</size> \n\n - This ship has two cannons with a slow fire rate";
     public const string SHIP_GREEN_DESCRIPTION = "<size=50>Green Ship</size> \n\n - This ship has one cannon with a fast fire rate";
     public const string SHIP_ORANGE_DESCRIPTION = "<size=50>Orange Ship</size> \n\n - This ship has three cannons with a very slow fire rate";
-    public const string SHIP_RED_DESCRIPTION = "<size=50>Red Ship \n\n - This ship has one cannon with a medium fire rate and it starts with a shield";
+    public const string SHIP_RED_DESCRIPTION = "<size=50>Red Ship</size> \n\n - This ship has one cannon with a medium fire rate and it starts with a shield";
 
 
     public static Ship ReturnShipEnum(string currentShip)
